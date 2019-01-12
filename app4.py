@@ -21,15 +21,39 @@ def index():
 @app.route("/stock")
 def stock():
 
-    df = pd.read_csv("result.csv")
+    df = pd.read_csv("result2.csv")
     df = df.dropna()
 
     # print(df.head())
-
+   
     dfdict = df.to_dict(orient="record")
 
-
     return jsonify(dfdict)
+@app.route("/sectors")
+def sectors():
+    """Return a list of sector names."""
+    df = pd.read_csv("result2.csv")
+    df = df.dropna()
+    sectors = df.Sector.unique().tolist()
+    # Return a list of the column names (sample names)
+    return jsonify(list(sectors))
+
+@app.route("/data<data>")
+def data():
+    df = pd.read_csv("result2.csv")
+    df = df.dropna()
+    stock_data = df.loc(df[data] > 1, "Year", )
+
+    # sectors = df.Sector.unique().tolist()
+    # years = df.Year.unique()[0::2]
+    
+    
+    
+    # dfdict2 = df.to_dict(orient="record")
+    # return jsonify(dfdict2)
+
+    
+
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5002)
+    app.run(debug=True, port=5003)
